@@ -1,7 +1,11 @@
+import glob
+
 import streamlit as st
 import pandas as pd
 
-df = pd.read_csv("1834_kazan.csv")
+csv_files = glob.iglob('*.csv')
+df = pd.concat((pd.read_csv(csv_file, dtype=str) for csv_file in csv_files), ignore_index=True)
+# df = pd.read_csv("1834_kazan.csv")
 st.set_page_config(page_title="Список кантонистов", layout="wide")
 st.title("Список кантонистов")
 
