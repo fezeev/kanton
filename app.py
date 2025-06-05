@@ -17,7 +17,7 @@ with st.expander("Фильтры по колонкам"):
     for col in df.columns:
         if col in str_col_list:
             continue
-        unique_vals = df[col].dropna().astype(str).unique()
+        unique_vals = df[col].dropna().astype(str).str.lower().unique()
         if unique_vals.size == 0:
             continue
 
@@ -30,7 +30,7 @@ search = st.text_input("Search")
 # Apply filters
 filtered_df = df.copy()
 for col, selected_vals in filters.items():
-    filtered_df = filtered_df[filtered_df[col].astype(str).isin(selected_vals)]
+    filtered_df = filtered_df[filtered_df[col].astype(str).str.lower().isin(selected_vals)]
 
 filtered_df = filtered_df[filtered_df.apply(lambda row: row.astype(str).str.contains(search, case=False).any(), axis=1)]
 
